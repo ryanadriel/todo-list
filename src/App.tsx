@@ -1,16 +1,17 @@
-import { Header } from './components/Header'
-import { Input } from './components/Input'
 import './App.css'
-import { Button } from './components/Button'
+import { NewTask } from './components/NewTask'
+
+import styles from './App.module.css'
+import { Info } from './components/Info'
+
 
 function App() {
 
   return (
     <>
-      <div>
-        <Header />
-        <Input />
-        <Button />
+      <div className={styles.wrapper}>
+        <NewTask />
+        <Info />
       </div>
     </>
   )
