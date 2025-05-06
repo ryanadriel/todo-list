@@ -2,8 +2,7 @@ import './App.css'
 import { NewTask } from './components/NewTask'
 
 import styles from './App.module.css'
-import { Info } from './components/Info'
-import { Empty } from './components/Empty'
+import { Tasks } from './components/Tasks'
 
 
 function App() {
@@ -13,10 +12,7 @@ function App() {
       <div className={styles.wrapper}>
         <NewTask />
 
-        <div className={styles.tasks}>
-          <Info />
-          <Empty />
-        </div>
+        <Tasks />
       </div>
     </>
   )
