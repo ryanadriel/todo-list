@@ -7,8 +7,14 @@
   gap: 6.4rem;
 }
 
-.tasks {
+.task {
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }

@@ -2,7 +2,8 @@ import './App.css'
 import styles from './App.module.css'
 import { NewTask } from './components/NewTask'
 import { Info } from './components/Info'
-import { Empty } from './components/Empty'
+// import { Empty } from './components/Empty'
+import { Task } from './components/Task'
 
 
 function App() {
@@ -13,9 +14,14 @@ function App() {
         <NewTask />
 
         <main>
-          <div className={styles.tasks}>
+          <div className={styles.task}>
             <Info />
-            <Empty />
+            
+            <div className={styles.list}>
+              <Task />
+              <Task />
+              <Task />
+            </div>
           </div>
         </main>
       </div>
