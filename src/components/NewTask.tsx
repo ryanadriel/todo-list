@@ -25,6 +25,7 @@ export function NewTask( { onAddTask }: NewTaskProps ) {
       const newTaskObj = {
         id: uuidv4(),
         title: newTask,
+        isCompleted: false
       };
 
       onAddTask(newTaskObj);
