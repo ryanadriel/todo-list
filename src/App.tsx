@@ -31,6 +31,16 @@ function App() {
     }
   }
 
+  const handleDeleteTask = (taskId: string, isCompleted: boolean) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+    setTotalTasks(totalTasks - 1);
+
+    if (isCompleted) {
+      setCompletedTasks(completedTasks - 1);
+    }
+  }
+
   return (
     <>
       < Header />
@@ -44,7 +54,13 @@ function App() {
             
             <div className={styles.list}>
               {tasks.map((task) => (
-                <Task key={task.id} task={task} onCompletedTasks={handleCompletedTasks} />
+                <Task 
+                  key={task.id}
+                  task={task}
+                  taskId={task.id}
+                  onCompletedTasks={handleCompletedTasks}
+                  onDeleteTask={handleDeleteTask}
+                />
               ))}
             </div>
           </div>
