@@ -1,17 +1,24 @@
 import styles from './Info.module.css'
 
+interface completedTasksProps {
+  completedTasks: number
+}
 
-export function Info({ completedTasks }: { completedTasks: number }) {
+interface totalTasksProps {
+  totalTasks: number
+}
+
+export function Info({ totalTasks, completedTasks }: totalTasksProps & completedTasksProps) {
   return(
     <div className={styles.info}>
       <div className={styles.created}>
         <strong>Tarefas Criadas</strong>
-        <strong>0</strong>
+        <strong>{totalTasks}</strong>
       </div>
 
       <div className={styles.done}>
         <strong>Concluídas</strong>
-        <strong>{completedTasks} de 3</strong>
+        <strong>{completedTasks} de {totalTasks}</strong>
       </div>
     </div>
   )

@@ -15,10 +15,12 @@ interface TaskItem {
 function App() {
 
   const [tasks, setTasks] = useState<TaskItem[]>([]);
+  const [totalTasks, setTotalTasks] = useState(0);
   const [completedTasks, setCompletedTasks] = useState(0);
 
   const handleAddTask = (newTask: TaskItem) => {
     setTasks([...tasks, newTask]);
+    setTotalTasks(totalTasks + 1);
   }
 
   const handleCompletedTasks = (isCompleted: boolean) => {
@@ -38,7 +40,7 @@ function App() {
 
         <main>
           <div className={styles.task}>
-            <Info completedTasks={completedTasks} />
+            <Info totalTasks={totalTasks} completedTasks={completedTasks} />
             
             <div className={styles.list}>
               {tasks.map((task) => (
