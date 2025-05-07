@@ -2,11 +2,21 @@ import './App.css'
 import styles from './App.module.css'
 import { NewTask } from './components/NewTask'
 import { Info } from './components/Info'
-// import { Empty } from './components/Empty'
 import { Task } from './components/Task'
+import { useState } from 'react'
 
 
 function App() {
+
+  const [completedTasks, setCompletedTasks] = useState(0);
+
+  const handleCompletedTasks = (isCompleted: boolean) => {
+    if (isCompleted) {
+      setCompletedTasks(completedTasks + 1);
+    } else {
+      setCompletedTasks(completedTasks - 1);
+    }
+  }
 
   return (
     <>
@@ -15,12 +25,12 @@ function App() {
 
         <main>
           <div className={styles.task}>
-            <Info />
+            <Info completedTasks={completedTasks} />
             
             <div className={styles.list}>
-              <Task />
-              <Task />
-              <Task />
+              <Task onCompletedTasks={handleCompletedTasks} />
+              <Task onCompletedTasks={handleCompletedTasks} />
+              <Task onCompletedTasks={handleCompletedTasks} />
             </div>
           </div>
         </main>

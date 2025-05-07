@@ -2,12 +2,13 @@ import styles from './Task.module.css'
 import { useState } from 'react';
 import { CheckCircle, Circle, Trash } from 'phosphor-react';
 
-export function Task(){
+export function Task( { onCompletedTasks }: { onCompletedTasks: (isCompleted: boolean) => void } ) {
 
   const [isChecked, setIsChecked] = useState(false);
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
+    onCompletedTasks(!isChecked);
   }
 
   return(
