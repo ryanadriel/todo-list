@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import styles from "./App.module.css";
+import { NewTask } from "./components/NewTask";
+import { Info } from "./components/Info";
+import { Task } from "./components/Task";
+import { useState } from "react";
+import { Header } from "./components/Header";
+import { Empty } from "./components/Empty";
+
+interface TaskItem {
+  id: string;
+  title: string;
+  isCompleted: boolean;
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
+  const [totalTasks, setTotalTasks] = useState(0);
+  const [completedTasks, setCompletedTasks] = useState(0);
+
+  const handleAddTask = (newTask: TaskItem) => {
+    setTasks([...tasks, newTask]);
+    setTotalTasks(totalTasks + 1);
+  };
+
+  const handleCompletedTasks = (isCompleted: boolean) => {
+    if (isCompleted) {
+      setCompletedTasks(completedTasks + 1);
+    } else {
+      setCompletedTasks(completedTasks - 1);
+    }
+  };
+
+  const handleDeleteTask = (taskId: string, isCompleted: boolean) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+    setTotalTasks(totalTasks - 1);
+
+    if (isCompleted) {
+      setCompletedTasks(completedTasks - 1);
+    }
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Header />
+
+      <div className={styles.wrapper}>
+        <NewTask onAddTask={handleAddTask} />
+
+        <main className={styles.tasks}>
+          <Info totalTasks={totalTasks} completedTasks={completedTasks} />
+
+          <div className={styles.list}>
+            {tasks.length === 0 ? (
+              <Empty />
+            ) : (
+              tasks.map((task) => (
+                <Task
+                  key={task.id}
+                  task={task}
+                  taskId={task.id}
+                  onCompletedTasks={handleCompletedTasks}
+                  onDeleteTask={handleDeleteTask}
+                />
+              ))
+            )}
+          </div>
+        </main>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

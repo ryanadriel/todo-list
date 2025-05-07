@@ -1,0 +1,30 @@
+.wrapper {
+  max-width: 73.6rem;
+  margin: -2.7rem auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6.4rem;
+}
+
+.tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 1.4rem;
+  }
+
+  .wrapper {
+    margin-inline: 1.6rem;
+  }
+}
