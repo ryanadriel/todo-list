@@ -1,10 +1,11 @@
-import './App.css'
-import styles from './App.module.css'
-import { NewTask } from './components/NewTask'
-import { Info } from './components/Info'
-import { Task } from './components/Task'
-import { useState } from 'react'
-import { Header } from './components/Header'
+import "./App.css";
+import styles from "./App.module.css";
+import { NewTask } from "./components/NewTask";
+import { Info } from "./components/Info";
+import { Task } from "./components/Task";
+import { useState } from "react";
+import { Header } from "./components/Header";
+import { Empty } from "./components/Empty";
 
 interface TaskItem {
   id: string;
@@ -13,7 +14,6 @@ interface TaskItem {
 }
 
 function App() {
-
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [totalTasks, setTotalTasks] = useState(0);
   const [completedTasks, setCompletedTasks] = useState(0);
@@ -21,7 +21,7 @@ function App() {
   const handleAddTask = (newTask: TaskItem) => {
     setTasks([...tasks, newTask]);
     setTotalTasks(totalTasks + 1);
-  }
+  };
 
   const handleCompletedTasks = (isCompleted: boolean) => {
     if (isCompleted) {
@@ -29,7 +29,7 @@ function App() {
     } else {
       setCompletedTasks(completedTasks - 1);
     }
-  }
+  };
 
   const handleDeleteTask = (taskId: string, isCompleted: boolean) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
@@ -39,35 +39,37 @@ function App() {
     if (isCompleted) {
       setCompletedTasks(completedTasks - 1);
     }
-  }
+  };
 
   return (
     <>
-      < Header />
+      <Header />
 
       <div className={styles.wrapper}>
         <NewTask onAddTask={handleAddTask} />
 
-        <main>
-          <div className={styles.task}>
-            <Info totalTasks={totalTasks} completedTasks={completedTasks} />
-            
-            <div className={styles.list}>
-              {tasks.map((task) => (
-                <Task 
+        <main className={styles.task}>
+          <Info totalTasks={totalTasks} completedTasks={completedTasks} />
+
+          <div className={styles.list}>
+            {tasks.length === 0 ? (
+              <Empty />
+            ) : (
+              tasks.map((task) => (
+                <Task
                   key={task.id}
                   task={task}
                   taskId={task.id}
                   onCompletedTasks={handleCompletedTasks}
                   onDeleteTask={handleDeleteTask}
                 />
-              ))}
-            </div>
+              ))
+            )}
           </div>
         </main>
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
