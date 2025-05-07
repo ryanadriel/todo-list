@@ -1,7 +1,7 @@
 import { PlusCircle } from "phosphor-react";
-import styles from './NewTask.module.css';
+import styles from "./NewTask.module.css";
 import { SetStateAction, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 interface Task {
   id: string;
@@ -10,38 +10,40 @@ interface Task {
 }
 
 interface NewTaskProps {
-  onAddTask: (task: Task) => void
+  onAddTask: (task: Task) => void;
 }
 
-export function NewTask( { onAddTask }: NewTaskProps ) {
-  const [newTask, setNewTask] = useState('');
+export function NewTask({ onAddTask }: NewTaskProps) {
+  const [newTask, setNewTask] = useState("");
 
-  const handleInputChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+  const handleInputChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setNewTask(event.target.value);
-  }
+  };
 
   const handleAddTask = () => {
-    if (newTask.trim() !== '') {
+    if (newTask.trim() !== "") {
       const newTaskObj = {
         id: uuidv4(),
         title: newTask,
-        isCompleted: false
+        isCompleted: false,
       };
 
       onAddTask(newTaskObj);
-      setNewTask('');
+      setNewTask("");
     }
-  }
+  };
 
-  const handleKeyPress = (event: { key: string; }) => {
-    if (event.key === 'Enter') {
+  const handleKeyPress = (event: { key: string }) => {
+    if (event.key === "Enter") {
       handleAddTask();
     }
-  }
+  };
 
   return (
     <>
-      <div>
+      <div className={styles.newTask}>
         <input
           type="text"
           className={styles.input}
@@ -50,15 +52,12 @@ export function NewTask( { onAddTask }: NewTaskProps ) {
           onChange={handleInputChange}
           onKeyPress={handleKeyPress}
         />
-      </div>
-
-      <button 
-        onClick={handleAddTask}
-        className={styles.button}
-      >
+      <button onClick={handleAddTask} className={styles.button}>
         Criar
         <PlusCircle />
       </button>
+      </div>
+
     </>
-  )
+  );
 }

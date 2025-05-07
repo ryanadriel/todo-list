@@ -34,7 +34,7 @@ export function Task({
 
   return (
     <div className={styles.task}>
-      <label className={isChecked ? styles.checked : "teste"}>
+      <label className={isChecked ? styles.completed : ""}>
         <input type="checkbox" checked={isChecked} onChange={toggleCheckbox} />
 
         <div title={isChecked ? "Tarefa concluída" : "Tarefa não concluída"}>

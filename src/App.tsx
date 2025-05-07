@@ -48,7 +48,7 @@ function App() {
       <div className={styles.wrapper}>
         <NewTask onAddTask={handleAddTask} />
 
-        <main className={styles.task}>
+        <main className={styles.tasks}>
           <Info totalTasks={totalTasks} completedTasks={completedTasks} />
 
           <div className={styles.list}>

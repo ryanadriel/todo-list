@@ -1,5 +1,5 @@
-import { ClipboardText } from 'phosphor-react'
-import styles from './Empty.module.css'
+import { ClipboardText } from "phosphor-react";
+import styles from "./Empty.module.css";
 
 export function Empty() {
   return (
@@ -11,5 +11,5 @@ export function Empty() {
         <p>Crie tarefas e organize seus itens a fazer</p>
       </div>
     </div>
-  )
+  );
 }

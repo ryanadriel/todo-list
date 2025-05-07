@@ -16,14 +16,14 @@ export function Info({
     <div className={styles.info}>
       <div className={styles.created}>
         <strong>Tarefas Criadas</strong>
-        <strong>{totalTasks}</strong>
+        <span>{totalTasks}</span>
       </div>
 
       <div className={styles.done}>
         <strong>Concluídas</strong>
-        <strong>
+        <span>
           {completedTasks} de {totalTasks}
-        </strong>
+        </span>
       </div>
     </div>
   );
