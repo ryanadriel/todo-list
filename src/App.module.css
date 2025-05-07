@@ -7,7 +7,7 @@
   gap: 6.4rem;
 }
 
-.task {
+.tasks {
   display: flex;
   flex-direction: column;
   gap: 2.4rem;
@@ -17,4 +17,14 @@
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 1.4rem;
+  }
+
+  .wrapper {
+    margin-inline: 1.6rem;
+  }
 }

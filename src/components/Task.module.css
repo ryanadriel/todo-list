@@ -46,6 +46,11 @@
   cursor: pointer;
 }
 
+.task label:focus-within div {
+  outline: transparent;
+  box-shadow: 0 0 0 2px var(--gray-100);
+}
+
 .task label div svg {
   width: 1.7455rem;
   height: 1.7455rem;
