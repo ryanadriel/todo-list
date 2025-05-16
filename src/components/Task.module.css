@@ -59,11 +59,11 @@
 }
 
 .circle {
-  color: var(--blue);
+  color: var(--purple);
   fill: transparent;
 
   &:hover {
-    fill: var(--blue-dark);
+    fill: var(--purple);
   }
 }
 
@@ -71,7 +71,7 @@
   fill: var(--purple-dark);
 
   &:hover {
-    fill: var(--purple);
+    fill: var(--white);
   }
 }
 

@@ -53,7 +53,7 @@ export function NewTask({ onAddTask }: NewTaskProps) {
           onKeyPress={handleKeyPress}
         />
       <button onClick={handleAddTask} className={styles.button}>
-        Criar
+        Criar 
         <PlusCircle />
       </button>
       </div>
