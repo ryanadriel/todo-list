@@ -1,0 +1,36 @@
+.container {
+  max-width: 40rem;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: var(--gray-500);
+  border-radius: 0.5rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+input {
+  padding: 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: var(--gray-700);
+  color: var(--gray-100);
+}
+
+.button {
+  padding: 1.2rem;
+  background: var(--blue-dark);
+  border: none;
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: var(--blue);
+  }
+}

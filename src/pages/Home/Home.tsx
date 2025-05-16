@@ -1,11 +1,11 @@
-import "./App.css";
-import styles from "./App.module.css";
-import { NewTask } from "./components/NewTask";
-import { Info } from "./components/Info";
-import { Task } from "./components/Task";
+import "./Home.css"; // se quiser manter o antigo App.css
+import styles from "./Home.module.css"; // renomeie App.module.css para Home.module.css
+import { NewTask } from "../../components/NewTask";
+import { Info } from "../../components/Info";
+import { Task } from "../../components/Task";
 import { useState } from "react";
-import { Header } from "./components/Header";
-import { Empty } from "./components/Empty";
+import { Header } from "../../components/Header";
+import { Empty } from "../../components/Empty";
 
 interface TaskItem {
   id: string;
@@ -13,7 +13,7 @@ interface TaskItem {
   isCompleted: boolean;
 }
 
-function App() {
+const Home = () => {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [totalTasks, setTotalTasks] = useState(0);
   const [completedTasks, setCompletedTasks] = useState(0);
@@ -24,11 +24,7 @@ function App() {
   };
 
   const handleCompletedTasks = (isCompleted: boolean) => {
-    if (isCompleted) {
-      setCompletedTasks(completedTasks + 1);
-    } else {
-      setCompletedTasks(completedTasks - 1);
-    }
+    setCompletedTasks(prev => prev + (isCompleted ? 1 : -1));
   };
 
   const handleDeleteTask = (taskId: string, isCompleted: boolean) => {
@@ -70,6 +66,6 @@ function App() {
       </div>
     </>
   );
-}
+};
 
-export default App;
+export default Home;
