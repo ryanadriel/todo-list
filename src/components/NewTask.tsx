@@ -1,7 +1,7 @@
 import { PlusCircle } from "phosphor-react";
 import styles from "./NewTask.module.css";
 import { SetStateAction, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { createTodo } from "../service/todoService";
 
 interface Task {
   id: string;
@@ -22,16 +22,20 @@ export function NewTask({ onAddTask }: NewTaskProps) {
     setNewTask(event.target.value);
   };
 
-  const handleAddTask = () => {
-    if (newTask.trim() !== "") {
-      const newTaskObj = {
-        id: uuidv4(),
-        title: newTask,
-        isCompleted: false,
-      };
+  const handleAddTask = async () => {
+    if (newTask.trim() === "") return;
 
-      onAddTask(newTaskObj);
+    try {
+      const createdTodo = await createTodo({
+        description: newTask,
+        completed: false,
+      });
+
+      onAddTask(createdTodo);
       setNewTask("");
+    } catch {
+      console.error("Erro ao adicionar tarefa");
+      alert("Erro ao adicionar tarefa");
     }
   };
 
