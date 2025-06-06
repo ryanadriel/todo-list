@@ -1,20 +1,26 @@
 import styles from "./Task.module.css";
 import { useState } from "react";
 import { CheckCircle, Circle, Trash } from "phosphor-react";
-import { Task as TaskType } from '../types/Task';
 
 interface TaskProps {
-  task: TaskType;
+  task: {
+    id: string;
+    title: string;
+    isCompleted: boolean;
+  };
+
+  taskId: string;
   onCompletedTasks: (isCompleted: boolean) => void;
   onDeleteTask: (taskId: string, isCompleted: boolean) => void;
 }
 
 export function Task({
   task,
+  taskId,
   onCompletedTasks,
   onDeleteTask,
 }: TaskProps) {
-  const [isChecked, setIsChecked] = useState(task.isCompleted);
+  const [isChecked, setIsChecked] = useState(false);
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
@@ -22,7 +28,7 @@ export function Task({
   };
 
   const handleDeleteTask = () => {
-    onDeleteTask(task.id, isChecked);
+    onDeleteTask(taskId, isChecked);
   };
 
   return (

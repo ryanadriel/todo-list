@@ -18,9 +18,9 @@
 }
 
 .created strong {
-  color: var(--purple);
+  color: var(--blue);
 }
 
 .done strong {
-  color: var(--white);
+  color: var(--purple);
 }
