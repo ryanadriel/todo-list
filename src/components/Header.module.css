@@ -8,3 +8,70 @@
 .header img {
   height: 4.8rem;
 }
+
+.logoutButton {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background: var(--gray-400);
+  color: var(--gray-100);
+
+  padding: 0.8rem 1.4rem;
+  border: 0;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+}
+
+.logoutButton:hover {
+  background: var(--danger);
+  color: var(--gray-100);
+}
+
+.authButtons {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  display: flex;
+  gap: 1.2rem;
+}
+
+.authButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+
+  background: transparent;
+  border: 1px solid var(--purple);
+  color: var(--purple);
+}
+
+.authButton:hover {
+  background: var(--purple-dark);
+  border-color: var(--purple-dark);
+  color: var(--gray-100);
+}
+
+.signUpButton {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: var(--gray-100);
+}
+
+.signUpButton:hover {
+  background: var(--purple-dark);
+  border-color: var(--purple-dark);
+}

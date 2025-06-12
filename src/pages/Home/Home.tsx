@@ -1,71 +1,127 @@
-import "./Home.css"; // se quiser manter o antigo App.css
-import styles from "./Home.module.css"; // renomeie App.module.css para Home.module.css
+import styles from "./Home.module.css";
+import { useState, useEffect } from "react";
+import { clearAuthHeader } from "../../services/todosService";
+import { getTodos, createTodo, deleteTodo, updateTodo } from '../../services/todosService';
+
+import { Header } from "../../components/Header";
 import { NewTask } from "../../components/NewTask";
 import { Info } from "../../components/Info";
 import { Task } from "../../components/Task";
-import { useState } from "react";
-import { Header } from "../../components/Header";
 import { Empty } from "../../components/Empty";
 
-interface TaskItem {
-  id: string;
-  title: string;
-  isCompleted: boolean;
-}
+import { Todo } from '../../types';
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const [tasks, setTasks] = useState<TaskItem[]>([]);
-  const [totalTasks, setTotalTasks] = useState(0);
-  const [completedTasks, setCompletedTasks] = useState(0);
+    const [todos, setTodos] = useState<Todo[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const navigate = useNavigate();
 
-  const handleAddTask = (newTask: TaskItem) => {
-    setTasks([...tasks, newTask]);
-    setTotalTasks(totalTasks + 1);
-  };
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            setIsAuthenticated(true);
+            fetchTodos();
+        } else {
+            setIsAuthenticated(false);
+            setLoading(false);
+        }
+    }, []);
 
-  const handleCompletedTasks = (isCompleted: boolean) => {
-    setCompletedTasks(prev => prev + (isCompleted ? 1 : -1));
-  };
+    const fetchTodos = async () => {
+            try {
+                setLoading(true);
+                const data = await getTodos();
+                setTodos(data);
+                setError(null);
+            } catch (err) {
+                setError('Falha ao carregar as tarefas.');
+                console.error("Detalhes do erro:", err);
+            } finally {
+                setLoading(false);
+            }
+    };
 
-  const handleDeleteTask = (taskId: string, isCompleted: boolean) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
-    setTasks(updatedTasks);
-    setTotalTasks(totalTasks - 1);
+    const handleAddTask = async (taskTitle: string) => {
+        try {
+            const createdTodo = await createTodo(taskTitle);
 
-    if (isCompleted) {
-      setCompletedTasks(completedTasks - 1);
-    }
-  };
+            console.log("Tarefa criada:", createdTodo);
+            setTodos(prevTodos => [...prevTodos, createdTodo]);
+        } catch (err) {
+            alert('Faça o login ou crie uma conta.');
+            console.error("Detalhes do erro:", err);
+        }
+    };
 
-  return (
-    <>
-      <Header />
+    const handleDeleteTask = async (taskId: number) => {
+        try {
+            await deleteTodo(taskId);
+            setTodos(prevTodos => prevTodos.filter(todo => todo.id !== taskId));
+        } catch (err) {
+            alert('Falha ao deletar a tarefa.');
+            console.error("Detalhes do erro:", err);
+        }
+    };
 
-      <div className={styles.wrapper}>
-        <NewTask onAddTask={handleAddTask} />
+    const handleToggleTaskCompletion = async (taskId: number, currentStatus: boolean) => {
+        const originalTodos = [...todos];
+        try {
+            setTodos(prevTodos =>
+                prevTodos.map(todo =>
+                    todo.id === taskId ? { ...todo, done: !todo.done } : todo
+                )
+            );
+            await updateTodo(taskId, { done: !currentStatus });
+        } catch (err) {
+            alert('Falha ao atualizar o status da tarefa.');
+            console.error("Detalhes do erro:", err);
+            setTodos(originalTodos);
+        }
+    };
 
-        <main className={styles.tasks}>
-          <Info totalTasks={totalTasks} completedTasks={completedTasks} />
+    const handleLogout = () => {
+        clearAuthHeader();
+        setIsAuthenticated(false);
+        navigate("/login");
+    };
 
-          <div className={styles.list}>
-            {tasks.length === 0 ? (
-              <Empty />
-            ) : (
-              tasks.map((task) => (
-                <Task
-                  key={task.id}
-                  task={task}
-                  taskId={task.id}
-                  onCompletedTasks={handleCompletedTasks}
-                  onDeleteTask={handleDeleteTask}
-                />
-              ))
-            )}
-          </div>
-        </main>
-      </div>
-    </>
-  );
+    const totalTasks = todos.length;
+    const completedTasks = todos.filter(todo => todo.done).length;
+
+    if (loading) return <p>Carregando...</p>;
+    if (error) return <p>{error}</p>;
+
+    return (
+        <>
+            <Header isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+
+            <div className={styles.wrapper}>
+                <NewTask onAddTask={handleAddTask} />
+
+                <main className={styles.tasks}>
+                    <Info totalTasks={totalTasks} completedTasks={completedTasks} />
+
+                    <div className={styles.list}>
+                        {totalTasks === 0 ? (
+                            <Empty />
+                        ) : (
+                            todos.map((todo) => (
+                                <Task
+                                    key={todo.id}
+                                    task={todo}
+                                    onDeleteTask={handleDeleteTask}
+                                    onToggleComplete={handleToggleTaskCompletion}
+                                />
+                            ))
+                        )}
+                    </div>
+                </main>
+            </div>
+        </>
+    );
 };
 
 export default Home;

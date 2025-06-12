@@ -1,62 +1,40 @@
 import { PlusCircle } from "phosphor-react";
 import styles from "./NewTask.module.css";
-import { SetStateAction, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-
-interface Task {
-  id: string;
-  title: string;
-  isCompleted: boolean;
-}
+import { useState, FormEvent, ChangeEvent } from "react";
 
 interface NewTaskProps {
-  onAddTask: (task: Task) => void;
+  onAddTask: (title: string) => void;
 }
 
 export function NewTask({ onAddTask }: NewTaskProps) {
-  const [newTask, setNewTask] = useState("");
+  const [title, setTitle] = useState("");
 
-  const handleInputChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setNewTask(event.target.value);
+  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
   };
 
-  const handleAddTask = () => {
-    if (newTask.trim() !== "") {
-      const newTaskObj = {
-        id: uuidv4(),
-        title: newTask,
-        isCompleted: false,
-      };
-
-      onAddTask(newTaskObj);
-      setNewTask("");
-    }
-  };
-
-  const handleKeyPress = (event: { key: string }) => {
-    if (event.key === "Enter") {
-      handleAddTask();
-    }
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+    if (!title.trim()) return;
+    onAddTask(title);
+    setTitle("");
   };
 
   return (
     <>
-      <div className={styles.newTask}>
+      <form className={styles.newTask} onSubmit={handleSubmit}>
         <input
           type="text"
           className={styles.input}
           placeholder="Adicione uma nova tarefa"
-          value={newTask}
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
+          value={title}
+          onChange={handleTitleChange}
         />
-      <button onClick={handleAddTask} className={styles.button}>
-        Criar
-        <PlusCircle />
-      </button>
-      </div>
+        <button type="submit" className={styles.button}>
+          Criar
+          <PlusCircle />
+        </button>
+      </form>
 
     </>
   );
